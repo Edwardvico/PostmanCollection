@@ -1,0 +1,1075 @@
+{
+	"info": {
+		"_postman_id": "caa60997-8172-4459-8209-7e979a6a19ff",
+		"name": "DUMMY JSON",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "41720565"
+	},
+	"item": [
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "Log and Get token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 200\", ()=> {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"response has data property\", ()=> {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an('object').that.includes.all.keys(\"accessToken\", \"refreshToken\", \"id\", \"username\", \"email\", \"firstName\", \"lastName\", \"gender\", \"image\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"username\": \"emilys\",\r\n    \"password\": \"emilyspass\",\r\n    \"expiresInMins\": 30\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://dummyjson.com/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Auth User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () { \r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response to Get Auth user\", function(){\r",
+									"    let refresh = pm.response.json().refreshToken\r",
+									"    pm.expect(refresh).to.not.be.null\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlbWlseXMiLCJlbWFpbCI6ImVtaWx5LmpvaG5zb25AeC5kdW1teWpzb24uY29tIiwiZmlyc3ROYW1lIjoiRW1pbHkiLCJsYXN0TmFtZSI6IkpvaG5zb24iLCJnZW5kZXIiOiJmZW1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL2VtaWx5cy8xMjgiLCJpYXQiOjE3NTAyNjk1MDEsImV4cCI6MTc1Mjg2MTUwMX0.aJFJ2qk8IPhuFfU1Um2XKAerC-I4DKy8xo2Kiw6uv8Q"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"type": "text"
+							}
+						],
+						"url": "https://dummyjson.com/auth/me"
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response for refresh\", function () {\r",
+									"    let response = pm.response.json();\r",
+									"    pm.expect(response.accessToken).to.not.be.null;\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlbWlseXMiLCJlbWFpbCI6ImVtaWx5LmpvaG5zb25AeC5kdW1teWpzb24uY29tIiwiZmlyc3ROYW1lIjoiRW1pbHkiLCJsYXN0TmFtZSI6IkpvaG5zb24iLCJnZW5kZXIiOiJmZW1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL2VtaWx5cy8xMjgiLCJpYXQiOjE3NTAyNjk1MDEsImV4cCI6MTc1Mjg2MTUwMX0.aJFJ2qk8IPhuFfU1Um2XKAerC-I4DKy8xo2Kiw6uv8Q"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlbWlseXMiLCJlbWFpbCI6ImVtaWx5LmpvaG5zb25AeC5kdW1teWpzb24uY29tIiwiZmlyc3ROYW1lIjoiRW1pbHkiLCJsYXN0TmFtZSI6IkpvaG5zb24iLCJnZW5kZXIiOiJmZW1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL2VtaWx5cy8xMjgiLCJpYXQiOjE3NTAyNjk1MDEsImV4cCI6MTc1Mjg2MTUwMX0.aJFJ2qk8IPhuFfU1Um2XKAerC-I4DKy8xo2Kiw6uv8Q\",\r\n    \"expiresInMins\": 30\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://dummyjson.com/auth/refresh"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PRODUCT",
+			"item": [
+				{
+					"name": "Get all products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"response to get all data\", () => {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"products\");\r",
+									"    pm.expect(jsonData.products).to.be.an(\"array\");\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://dummyjson.com/products"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 200\", ()=>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"response to get a single product\", ()=>{\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"id\");\r",
+									"    pm.expect(jsonData).to.have.property(\"title\");\r",
+									"    pm.expect(jsonData).to.have.property(\"description\");\r",
+									"    pm.expect(jsonData).to.have.property(\"category\");\r",
+									"    pm.expect(jsonData).to.have.property(\"price\");\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://dummyjson.com/products/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 200\", ()=>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"search response query for phone\", ()=>{\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"products\");\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://dummyjson.com/products/search?q=phone",
+							"protocol": "https",
+							"host": [
+								"dummyjson",
+								"com"
+							],
+							"path": [
+								"products",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "phone"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Limit and Skip",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 200\", ()=>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"response for limit and skip\", ()=>{\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.limit).to.eql(10);   \r",
+									"    pm.expect(jsonData.skip).to.eql(10);   \r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://dummyjson.com/products?limit=10&skip=10&select=title,price",
+							"protocol": "https",
+							"host": [
+								"dummyjson",
+								"com"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "skip",
+									"value": "10"
+								},
+								{
+									"key": "select",
+									"value": "title,price"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sort Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validate sorting of products\",()=>{\r",
+									"    let jsonData = pm.response.json();\r",
+									"     let products = jsonData.products;\r",
+									"    pm.expect(jsonData).to.have.property(\"products\");\r",
+									"    pm.expect(products).to.be.an(\"array\");\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://dummyjson.com/products?sortBy=title&order=asc",
+							"protocol": "https",
+							"host": [
+								"dummyjson",
+								"com"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "sortBy",
+									"value": "title"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 200\", ()=>{\r",
+									"    pm.response.to.have.status(200) \r",
+									"})\r",
+									"\r",
+									"pm.test(\"response for a delete products\",()=>{\r",
+									"    let jsonData = pm.response.json()\r",
+									"    pm.expect(jsonData).to.have.property(\"id\", 1);\r",
+									"    pm.expect(jsonData).to.have.property(\"title\");\r",
+									"    pm.expect(jsonData).to.have.property(\"description\");\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://dummyjson.com/products/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CART FOLDER",
+			"item": [
+				{
+					"name": "Get all Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"response to Get all Cart\",()=>{\r",
+									"    let response = pm.response.json();\r",
+									"    pm.expect(response.carts).to.be.an(\"array\");\r",
+									"    pm.expect(response).to.be.property(\"carts\");\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://dummyjson.com/carts"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Single User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validate a single User\", function () {\r",
+									"    let User = pm.response.json();\r",
+									"    pm.expect(User.id).to.be.eql(1)\r",
+									"    pm.expect(User.userId).to.be.eql(33);\r",
+									"    pm.expect(User.totalProducts).to.be.eql(4);\r",
+									"    pm.expect(User.totalQuantity).to.be.eql(15);\r",
+									"    pm.expect(User.total).to.be.eql(103774.85);\r",
+									"    pm.expect(User.discountedTotal).to.be.eql(89686.65);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://dummyjson.com/carts/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cart By A User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);    \r",
+									"})\r",
+									"\r",
+									"//THE BELOW I COMMENT IS WORKING BUT I COMMENT IT OUT BECAUSE I WANT TO USE THE CODE BELOW IT AND LEARN MORE ABOUT IT\r",
+									"\r",
+									"//pm.test(\"response to validate Cart by a User\",()=>{\r",
+									"    //let jsonData = pm.response.json();\r",
+									"    //pm.expect(jsonData).to.have.property(\"carts\");\r",
+									"    //pm.expect(jsonData).to.have.property(\"total\");\r",
+									"    //pm.expect(jsonData).to.have.property(\"skip\");\r",
+									"    //pm.expect(jsonData).to.have.property(\"limit\");\r",
+									"//})\r",
+									"\r",
+									"pm.test(\"Response to validate carts\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.carts).to.have.lengthOf(0);\r",
+									"    pm.expect(jsonData.total).to.be.eql(0);\r",
+									"    pm.expect(jsonData.skip).to.be.eql(0);\r",
+									"    pm.expect(jsonData.limit).to.be.eql(0);\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://dummyjson.com/carts/user/5"
+					},
+					"response": []
+				},
+				{
+					"name": "Add a Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response for add cart\", ()=>{\r",
+									"    let response = pm.response.json();\r",
+									"    pm.expect(response).to.have.property(\"id\");\r",
+									"    pm.expect(response.products).to.be.an(\"array\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 1,\r\n    \"products\": [\r\n        {\r\n            \"id\": 144,\r\n            \"quantity\": 4\r\n        },\r\n        {\r\n            \"id\": 98,\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://dummyjson.com/carts/add?userID=51",
+							"protocol": "https",
+							"host": [
+								"dummyjson",
+								"com"
+							],
+							"path": [
+								"carts",
+								"add"
+							],
+							"query": [
+								{
+									"key": "userID",
+									"value": "51"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete A cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 200\", ()=>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"response for is Delete is true {\", () => {\r",
+									"    let response = pm.response.json();\r",
+									"    pm.expect(response.isDeleted).to.be.eql(true)\r",
+									"    \r",
+									"    //OR\r",
+									"    //pm.response.to.have.jsonBody('isDeleted', true);\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "https://dummyjson.com/carts/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RECIPE FOLDER",
+			"item": [
+				{
+					"name": "Get All Recipes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response to get all Recipes\", ()=>{\r",
+									"    let response = pm.response.json();\r",
+									"    pm.expect(response).to.have.property(\"recipes\");\r",
+									"    pm.expect(response).to.have.property(\"total\"); //From here to \"LIMIT\" are all Below the body of the response from number 1242-1244\r",
+									"    pm.expect(response).to.have.property(\"skip\");\r",
+									"    pm.expect(response).to.have.property(\"limit\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://dummyjson.com/recipes"
+					},
+					"response": []
+				},
+				{
+					"name": "Get A Single Recipe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response for a single recipe \", ()=>{\r",
+									"    let response = pm.response.json();\r",
+									"    pm.expect(response.id).to.eql(1);\r",
+									"    pm.expect(response.name).to.eql(\"Classic Margherita Pizza\")\r",
+									"    pm.expect(response.ingredients).to.be.an(\"array\");\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://dummyjson.com/recipes/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Recipes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response for search recipe\", ()=>{\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.a.property(\"recipes\");\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://dummyjson.com/recipes/search?q=Margherita",
+							"protocol": "https",
+							"host": [
+								"dummyjson",
+								"com"
+							],
+							"path": [
+								"recipes",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "Margherita"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Limit and Skip Recipes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response for limit and skip recipes is correct\",()=>{\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.recipes).to.be.an(\"array\");\r",
+									"    pm.expect(jsonData).to.have.property(\"total\");\r",
+									"    //pm.expect(jsonData).to.have.property(\"skip\");//another way to check skip value\r",
+									"    pm.expect(jsonData.skip).to.be.eql(10);//another way to check skip value\r",
+									"    pm.expect(jsonData.limit).to.be.eql(10);//another way to check limit value\r",
+									"\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://dummyjson.com/recipes?limit=10&skip=10&select=name,image",
+							"protocol": "https",
+							"host": [
+								"dummyjson",
+								"com"
+							],
+							"path": [
+								"recipes"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "skip",
+									"value": "10"
+								},
+								{
+									"key": "select",
+									"value": "name,image"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "USERS FOLDER",
+			"item": [
+				{
+					"name": "Get all Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response for get all users\", function(){\r",
+									"    let response = pm.response.json();\r",
+									"    pm.expect(response.users).to.be.an(\"array\");\r",
+									"    pm.expect(response.total).to.be.eql(208);\r",
+									"    pm.expect(response.skip).to.be.eql(0);\r",
+									"    pm.expect(response.limit).to.be.eql(30);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://dummyjson.com/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Login User and Get Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response for login User and get a token\", ()=>{\r",
+									"    const response = pm.response.json();\r",
+									"    //pm.expect(response.accessToken).to.not.be.null; OR\r",
+									"    pm.expect(response).to.have.property(\"accessToken\");\r",
+									"    //pm.expect(response).to.have.property(\"refreshToken\");\r",
+									"    pm.expect(response.refreshToken).to.not.be.null;\r",
+									"    //pm.expect(response).to.have.property(\"id\")\r",
+									"    pm.expect(response.id).to.not.be.null;\r",
+									"    //pm.expect(response).to.have.property(\"username\")\r",
+									"    pm.expect(response.username).to.not.be.null;\r",
+									"    //pm.expect(response).to.have.property(\"email\")\r",
+									"    pm.expect(response.email).to.not.be.null;\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"emilys\",\r\n    \"password\": \"emilyspass\",\r\n    \"expiresInMins\": 30\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://dummyjson.com/user/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response for search Users \", function() {\r",
+									"    let response = pm.response.json();\r",
+									"    pm.expect(response.users).to.be.an(\"array\");\r",
+									"    pm.expect(response).to.have.property(\"total\");\r",
+									"    pm.expect(response).to.have.property(\"skip\");\r",
+									"    pm.expect(response).to.have.property(\"limit\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://dummyjson.com/users/search?q=John",
+							"protocol": "https",
+							"host": [
+								"dummyjson",
+								"com"
+							],
+							"path": [
+								"users",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "John"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response for Filter Users\", function(){\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.users).to.be.an(\"array\");\r",
+									"    pm.expect(jsonData.users).to.be.an(\"array\");\r",
+									"    pm.expect(jsonData).to.have.property(\"total\");\r",
+									"    pm.expect(jsonData).to.have.property(\"skip\");\r",
+									"    pm.expect(jsonData).to.have.property(\"limit\");\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://dummyjson.com/users/filter?key=hair.color&value=Brown",
+							"protocol": "https",
+							"host": [
+								"dummyjson",
+								"com"
+							],
+							"path": [
+								"users",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "hair.color"
+								},
+								{
+									"key": "value",
+									"value": "Brown"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST FOLDER",
+			"item": [
+				{
+					"name": "Get all post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" pm.test(\"Validate for Get all Post\", function (){\r",
+									"    let jsonData = pm.response.json();\r",
+									"    //pm.expect(jsonData).to.have.property(\"posts\");\r",
+									"    pm.expect(jsonData.posts).to.be.an(\"array\");\r",
+									"    pm.expect(jsonData.total).to.be.eql(251);\r",
+									"    pm.expect(jsonData).to.have.property(\"skip\");\r",
+									"    pm.expect(jsonData.limit).to.be.eql(30);\r",
+									" })"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://dummyjson.com/posts"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate Get a sungle User\",function(){\r",
+									"    let response = pm.response.json();\r",
+									"    pm.expect(response).to.have.property(\"id\");\r",
+									"    pm.expect(response).to.have.property(\"title\");\r",
+									"    pm.expect(response).to.have.property(\"body\");\r",
+									"    pm.expect(response).to.have.property(\"tags\");\r",
+									"    pm.expect(response).to.have.property(\"reactions\");\r",
+									"    pm.expect(response).to.have.property(\"views\");\r",
+									"    pm.expect(response).to.have.property(\"userId\");\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://dummyjson.com/posts/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response for Search Post\", function(){\r",
+									"    let responsejson = pm.response.json();\r",
+									"    pm.expect(responsejson.posts).to.be.an(\"array\");\r",
+									"    pm.expect(responsejson).to.have.property(\"total\");\r",
+									"    pm.expect(responsejson).to.have.property(\"skip\");\r",
+									"    pm.expect(responsejson).to.have.property(\"limit\");\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://dummyjson.com/posts/search?q=love",
+							"protocol": "https",
+							"host": [
+								"dummyjson",
+								"com"
+							],
+							"path": [
+								"posts",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "love"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

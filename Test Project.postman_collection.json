@@ -1,0 +1,382 @@
+{
+	"info": {
+		"_postman_id": "1f6d7ce4-6ff3-4a77-b159-930d0d31c621",
+		"name": "Test Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41720565"
+	},
+	"item": [
+		{
+			"name": "GET FOLDER",
+			"item": [
+				{
+					"name": "ListUsers",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", ()=> {\r",
+									"    pm.response.to.have.status(200);\r",
+									"}); \r",
+									"\r",
+									"//Validate our FIRST ID...... \r",
+									"\r",
+									"pm.test(\"Validating of the first Id\", function (){\r",
+									"    \r",
+									"    pm.expect(response.data).to.be.an(\"array\").that.is.not.empty;\r",
+									"    let user = response.data[0];\r",
+									"    pm.expect(user.id).to.eql(7);\r",
+									"    pm.expect(user).to.have.property(\"email\");\r",
+									"    pm.expect(user).to.have.property(\"first_name\");\r",
+									"    pm.expect(user).to.have.property(\"last_name\");\r",
+									"    pm.expect(user).to.have.property(\"avatar\");\r",
+									"});\r",
+									"\r",
+									"//Validate our SECOND ID......\r",
+									"\r",
+									"// pm.test(\"Validating of the second Id\", function (){\r",
+									"//    let response = pm.response.json();\r",
+									"//    pm.expect(response.data).to.be.an(\"array\").that.is.not.empty;\r",
+									"//    let user = response.data[1];\r",
+									"//    pm.expect(user.id).to.eql(8);\r",
+									"//    pm.expect(user).to.have.property(\"id\");\r",
+									"//    pm.expect(user.name).to.eql(\"chili pepper\");\r",
+									"//    pm.expect(user).to.have.property(\"year\");\r",
+									"//    pm.expect(user.color).to.eql(\"#9B1B30\");\r",
+									"// });"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"description": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://reqres.in/api/users?page=2",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SingleUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response or Validation for a single user\", ()=>{\r",
+									"    let Jsondata = pm.response.json();\r",
+									"    let data = Jsondata.data;\r",
+									"    pm.expect(data.id).to.be.eql(2);\r",
+									"    pm.expect(data.email).to.be.eql(\"janet.weaver@reqres.in\");\r",
+									"    pm.expect(data).to.have.property(\"first_name\");\r",
+									"    pm.expect(data).to.have.property(\"last_name\");\r",
+									"    pm.expect(data).to.have.property(\"avatar\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://reqres.in/api/users/2",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SingleUserNotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://reqres.in/api/users/23",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users",
+								"23"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST FOLDER",
+			"item": [
+				{
+					"name": "LoginSuccessfully",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", ()=> {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate successful\", ()=>{\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"token\");\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "reqres-free-v1",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "x-api-key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"description": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/login",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUT FOLDER",
+			"item": [
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response for the update information\", ()=>{\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"name\");\r",
+									"    pm.expect(jsonData).to.have.property(\"job\");\r",
+									"    pm.expect(jsonData).to.have.property(\"updatedAt\");\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/users/2?=",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"value": ""
+		}
+	]
+}

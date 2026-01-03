@@ -1,0 +1,662 @@
+{
+	"info": {
+		"_postman_id": "c0b7a576-d8b3-4fe9-996a-36865943d87b",
+		"name": "TestCase 1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "41720565"
+	},
+	"item": [
+		{
+			"name": "GET FOLDER",
+			"item": [
+				{
+					"name": "GetUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" //Validate first ID\r",
+									"pm.test(\"validate field for id:7\",()=> {\r",
+									"    pm.expect(response.data).to.be.an(\"array\").that.is.not.empty;\r",
+									"    let user = response.data[0];\r",
+									"    pm.expect(user.id).to.eql(7);\r",
+									"    pm.expect(user.email).to.eql(\"michael.lawson@reqres.in\");\r",
+									"    pm.expect(user.first_name).to.eql(\"Michael\");\r",
+									"    pm.expect(user.last_name).to.eql(\"Lawson\");\r",
+									"});\r",
+									"\r",
+									"//Validate second Id \r",
+									"pm.test(\"validate field for id:8\", ()=> {\r",
+									"    let user = response.data[1];\r",
+									"    pm.expect(user.id).to.eql(8);\r",
+									"    pm.expect(user.email).to.eql(\"lindsay.ferguson@reqres.in\");\r",
+									"    pm.expect(user.first_name).to.eql(\"Lindsay\");\r",
+									"    pm.expect(user.last_name).to.also.be.eql(\"Ferguson\");\r",
+									"    });\r",
+									"\r",
+									"    //Validate third Id \r",
+									"pm.test(\"Validate field for id:9\", function (){\r",
+									"    let user = response.data[2];\r",
+									"    pm.expect(user.id).to.eql(9);\r",
+									"    pm.expect(user.email).to.eql(\"tobias.funke@reqres.in\");\r",
+									"    pm.expect(user.first_name).to.eql(\"Tobias\");\r",
+									"    pm.expect(user.last_name).to.eql(\"Funke\");\r",
+									"\r",
+									"});\r",
+									"\r",
+									"//Validate fourth ID\r",
+									"pm.test(\"Validate field for id 10\", ()=> {\r",
+									"    let user = response.data[3];\r",
+									"    pm.expect(user.id).to.be.eql(10);\r",
+									"    pm.expect(user.email).to.be.eql(\"byron.fields@reqres.in\");\r",
+									"    pm.expect(user.first_name).to.be.eql(\"Byron\");\r",
+									"    pm.expect(user.last_name).to.be.eql(\"Fields\");\r",
+									"    pm.expect(user.avatar).to.be.eql(\"https://reqres.in/img/faces/10-image.jpg\");\r",
+									"});\r",
+									"\r",
+									"//Validate fifth ID\r",
+									"pm.test(\"Validate field for id 11\", () => {\r",
+									"    let user = response.data[4];\r",
+									"    pm.expect(user.id).to.be.eql(11);\r",
+									"    //pm.expect(user.email).to.be.eql(\"email\");\r",
+									"    pm.expect(user.first_name).to.be.eql(\"George\");\r",
+									"    pm.expect(user.last_name).to.be.eql(\"Edwards\");\r",
+									"    pm.expect(user.avatar).to.be.eql(\"https://reqres.in/img/faces/11-image.jpg\");\r",
+									"});\r",
+									"\r",
+									"//Validate sixth ID\r",
+									"pm.test(\"Validate field for id 12\", function() {\r",
+									"    let user = response.data[5];\r",
+									"    pm.expect(user.id).to.be.eql(12);\r",
+									"    //pm.expect(user.email).to.be.eql(\"achel.howell@reqres.in\");\r",
+									"    pm.expect(user.first_name).to.be.eql(\"Rachel\");\r",
+									"    pm.expect(user.last_name).to.be.eql(\"Howell\");\r",
+									"    pm.expect(user.avatar).to.be.eql(\"https://reqres.in/img/faces/12-image.jpg\");\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://reqres.in/api/users?page=2",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						},
+						"description": "## Get Users\n\nThis endpoint retrieves a list of users from the specified page of the user database. It is useful for paginating through user data, allowing clients to access user information in a structured way.\n\n### Request\n\n- **Method:** GET\n    \n- **URL:** `https://reqres.in/api/users?page=2`\n    \n\n### Query Parameters\n\n- **page** (integer): The page number of the users to retrieve. In this case, it is set to `2`.\n    \n\n### Response\n\nThe response will return a JSON object containing the following structure:\n\n- **page** (integer): The current page number.\n    \n- **per_page** (integer): The number of users returned per page.\n    \n- **total** (integer): The total number of users available.\n    \n- **total_pages** (integer): The total number of pages available based on the total number of users.\n    \n- **data** (array): An array of user objects, where each user object contains:\n    \n    - **id** (integer): The unique identifier for the user.\n        \n    - **email** (string): The email address of the user.\n        \n    - **first_name** (string): The first name of the user.\n        \n    - **last_name** (string): The last name of the user.\n        \n    - **avatar** (string): The URL of the user's avatar image.\n        \n- **support** (object): An object containing support information:\n    \n    - **url** (string): The URL for support.\n        \n    - **text** (string): A message providing support details.\n        \n\n### Example Response\n\n``` json\n{\n  \"page\": 0,\n  \"per_page\": 0,\n  \"total\": 0,\n  \"total_pages\": 0,\n  \"data\": [\n    {\n      \"id\": 0,\n      \"email\": \"\",\n      \"first_name\": \"\",\n      \"last_name\": \"\",\n      \"avatar\": \"\"\n    }\n  ],\n  \"support\": {\n    \"url\": \"\",\n    \"text\": \"\"\n  }\n}\n\n ```\n\nThis endpoint is designed to provide users with paginated access to user data, making it easier to navigate through larger datasets."
+					},
+					"response": []
+				},
+				{
+					"name": "SingleUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 200\", ()=> {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response for a single use\",() =>{\r",
+									"    let jsonData = pm.response.json();\r",
+									"    let data = jsonData.data;\r",
+									"    pm.expect(data.id).to.be.eql(2);\r",
+									"    pm.expect(data.email).to.be.eql(\"janet.weaver@reqres.in\");\r",
+									"    pm.expect(data.first_name).to.be.eql(\"Janet\");\r",
+									"    pm.expect(data.last_name).to.be.eql(\"Weaver\");\r",
+									"    pm.expect(data.avatar).to.be.eql(\"https://reqres.in/img/faces/2-image.jpg\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": "https://reqres.in/api/users/2"
+					},
+					"response": []
+				},
+				{
+					"name": "SingleUser NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 404\", ()=> {\r",
+									"    pm.response.to.have.status (404);\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": "https://reqres.in/api/users/23"
+					},
+					"response": []
+				},
+				{
+					"name": "List  <Resource>",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Single  <Resource>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 200\", ()=> {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response to be for Single User\", ()=> {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.a.property(\"data\");\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://reqres.in/api/unknown/2?=",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"unknown",
+								"2"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single <Resource> Not Found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": "https://reqres.in/api/unknown/23"
+					},
+					"response": []
+				},
+				{
+					"name": "DelayResponse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 200\", ()=> {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://reqres.in/api/users?delay=3",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "delay",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST  FOLDER",
+			"item": [
+				{
+					"name": "LoginUnsuccessful",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code to be (400)\", ()=> {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"peter@klaven\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://reqres.in/api/login"
+					},
+					"response": []
+				},
+				{
+					"name": "LoginSuccesful",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code to be(200)\", ()=> {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://reqres.in/api/login"
+					},
+					"response": []
+				},
+				{
+					"name": "RgisterUnsuccessful",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 400\", ()=> {\r",
+									"    pm.response.to.have.status(400);\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"sydney@fife\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://reqres.in/api/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 201\", function() {\r",
+									"    pm.response.to.have.status(201);\r",
+									"})\r",
+									"pm.test(\"response details to be \", function(){\r",
+									"    let data = pm.response.json();\r",
+									"    let id = data.id;\r",
+									"    pm.expect(data.name).to.be.eql(\"morpheus\");\r",
+									"    pm.expect(data.job).to.be.eql(\"leader\");\r",
+									"    pm.expect(data.id).to.be.a('string');\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"leader\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://reqres.in/api/users"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUT FOLDER",
+			"item": [
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 200\", ()=> {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response for the update detail\", () => {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"name\");\r",
+									"    pm.expect(jsonData).to.have.property(\"job\");\r",
+									"    pm.expect(jsonData).to.have.property(\"updatedAt\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://reqres.in/api/users/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PATCH FOLDER",
+			"item": [
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://reqres.in/api/users/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DELETE FOLDER",
+			"item": [
+				{
+					"name": "DeleteDelete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": "https://reqres.in/api/users/2"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl\n",
+			"value": "https://reqres.in/",
+			"type": "string"
+		}
+	]
+}
